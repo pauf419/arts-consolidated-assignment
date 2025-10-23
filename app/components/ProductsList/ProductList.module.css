@@ -1,0 +1,36 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color, #e5e7eb);
+}
+
+.title {
+  font-size: 23px;
+  font-weight: bold;
+}
+
+.total {
+  font-size: 16px;
+  color: var(--text-secondary, #6b7280);
+}
+
+.productListWrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+@media (max-width: 640px) {
+  .productListWrapper {
+    grid-template-columns: 1fr;
+  }
+}

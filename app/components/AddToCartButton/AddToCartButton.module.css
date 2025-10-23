@@ -1,0 +1,11 @@
+.buttonWrapper {
+  padding: 0.5rem 1rem;
+  background: #191a1c;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: 0.2s all ease;
+
+  &:hover {
+    background: #1a1c1f;
+  }
+}
