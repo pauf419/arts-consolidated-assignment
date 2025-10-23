@@ -1,36 +1,82 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Next.js E-commerce Store
 
-## Getting Started
+E-commerce application built with Next.js 15, TypeScript, and Zustand.
 
-First, run the development server:
+## Live Demo
+
+[View Live](https://arts-consolidated-assignment.vercel.app) | [GitHub](https://github.com/pauf419/arts-consolidated-assignment.git)
+
+## Features
+
+- Product listing with server-side pagination
+- Product detail pages with SSR
+- Shopping cart with persistent storage (Zustand + localStorage)
+- Responsive design with CSS Modules
+- Error handling and loading states
+
+## Tech Stack
+
+- **Next.js 15** (App Router)
+- **TypeScript**
+- **Zustand** (state management)
+- **CSS Modules**
+- **DummyJSON API**
+
+## Build & Start
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# Clone and install
+git clone https://github.com/pauf419/arts-consolidated-assignment.git
+cd arts-consolidated-assignment
+npm install
+
+# Build and run application
+npm run build && npm run start
+
+# Open http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Architecture Decisions
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### State Management - Zustand
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+**Why?** Minimal boilerplate, better performance than Context API, built-in persistence
 
-## Learn More
+- ✅ Simple API, TypeScript support, localStorage integration
+- ❌ Cart doesn't sync across devices (trade-off for simplicity)
 
-To learn more about Next.js, take a look at the following resources:
+### Styling - CSS Modules
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**Why?** Scoped styles, no runtime overhead, easy maintenance
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- ✅ No naming conflicts, CSS variables for theming
+- ❌ More files than Tailwind (acceptable for better organization)
 
-## Deploy on Vercel
+### Rendering Strategy
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Server Components**: Product pages (SEO, performance)
+- **Client Components**: Cart, Header (interactivity)
+- **Server-side Pagination**: SEO-friendly URLs, shareable links
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Error Handling
+
+- Promise `.catch()` instead of try/catch (avoids ESLint warnings)
+- Custom `fetchWithRetry` function with timeout and retry logic
+- Separate error display components
+- Global error boundaries via Next.js `error.tsx`
+
+## Key Trade-offs
+
+| Decision               | Pro                 | Con                  | Why                 |
+| ---------------------- | ------------------- | -------------------- | ------------------- |
+| localStorage cart      | Fast, no backend    | No cross-device sync | Simpler MVP         |
+| Server-side pagination | SEO, shareable URLs | Full page reload     | Better for products |
+| Standard `<img>`       | Simple setup        | No optimization      | External API images |
+
+## Known Limitations
+
+1. **Cart**: localStorage only, no cross-device/browser sync
+2. **Images**: No lazy loading or Next.js Image optimization
+3. **SEO**: Basic meta tags only (no Open Graph, JSON-LD)
+4. **Accessibility**: Basic implementation, needs ARIA labels
+5. **Testing**: No unit/E2E tests yet
